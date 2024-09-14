@@ -8,7 +8,7 @@ COMPLETION_NAME="cargof_completion"
 # مقصد نصب
 DESTINATION_PATH="/usr/local/bin"
 # مسیر نصب تکمیل
-COMPLETION_DESTINATION_PATH="/etc/bash_completion.d"
+COMPLETION_DESTINATION_PATH="/etc/profile.d"
 
 # بررسی اینکه اسکریپت با دسترسی root اجرا می‌شود
 if [ "$(id -u)" -ne "0" ]; then
