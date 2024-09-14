@@ -9,7 +9,7 @@ NC='\033[0m'
 
 # تابعی برای چاپ خطا
 print_error() {
-  echo -e "${RED}Error: $1${NC}"
+  echo "$1"  # بدون رنگ
 }
 
 if [ "$1" != "build" ] && [ "$1" != "new" ]; then
@@ -70,8 +70,8 @@ new() {
 
   # Capture output and error
   if ! output=$(cargo new "$name" $additional_options 2>&1); then
-    print_error "Error occurred while creating new project: \n"
-    echo -e "${RED}$output${NC}"
+    print_error "Error occurred while creating new project:"
+    echo -e "${RED}$output${NC}"  # فقط خروجی به رنگ قرمز
     exit 1
   fi
 
