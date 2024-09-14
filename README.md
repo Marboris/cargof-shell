@@ -10,11 +10,11 @@ Simple and practical.
 
 # Usage:
     cf --help
-    cargof --help
+    cargof [TAB]
 
 # Example:
-    cf --help
+    cf new --name exampl --bin
 
-    cf new n=helloworld
+    cf new --name helloworld
     cd helloworld
     cf build
