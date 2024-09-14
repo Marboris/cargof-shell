@@ -8,7 +8,7 @@ COMPLETION_SOURCE_PATH="./completion.sh"
 # مقصد نصب
 DESTINATION_PATH="/usr/local/bin"
 # مسیر نصب تکمیل
-COMPLETION_DESTINATION_PATH="/etc/bash_completion.d"
+COMPLETION_DESTINATION_PATH="/etc/profile.d"
 
 # نام‌های دلخواه
 PRIMARY_NAME="cargof"
@@ -64,20 +64,6 @@ cp "$COMPLETION_SOURCE_PATH" "$COMPLETION_DESTINATION_PATH/$COMPLETION_NAME.sh"
 echo "Script has been installed as $PRIMARY_NAME and $ALIAS_NAME."
 echo "Completion script has been installed as $COMPLETION_NAME in $COMPLETION_DESTINATION_PATH."
 
-# دریافت نام کاربری اصلی
-original_user=$SUDO_USER
-
-# نمایش پیغام و تغییر به کاربر اصلی
-echo "Trying to switch to user: $original_user"
-sudo -u $original_user bash -c '
-    sleep 1
-    source /etc/bash_completion.d/cargof_completion.sh
-    sleep 0.5
-    echo "Source completed: /etc/bash_completion.d/cargof_completion.sh"
-'
-
-# نمایش پیغام در صورت خروج از sudo
-echo "Exited from user $original_user"
 echo ""
 echo "\"\""
 echo "  try in your shell/bash/zsh/etc. :"
