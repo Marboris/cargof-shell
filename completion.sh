@@ -19,4 +19,5 @@ _completions() {
   fi
 }
 
-complete -F _completions cargof.sh
+# فایل اجرایی شما
+complete -F _completions cargof

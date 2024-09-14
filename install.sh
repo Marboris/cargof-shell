@@ -33,16 +33,36 @@ if [ ! -f "$COMPLETION_SOURCE_PATH" ]; then
   exit 1
 fi
 
-# کپی فایل به مسیر مقصد و اعطای مجوز اجرایی
+# جایگزینی فایل شل در مسیر مقصد و اعطای مجوز اجرایی
+if [ -f "$DESTINATION_PATH/$PRIMARY_NAME" ]; then
+  echo "Replacing existing script $DESTINATION_PATH/$PRIMARY_NAME"
+fi
 cp "$SOURCE_PATH" "$DESTINATION_PATH/$PRIMARY_NAME"
 chmod +x "$DESTINATION_PATH/$PRIMARY_NAME"
 
-# ایجاد لینک‌های سمبلیک برای نام‌های اضافی
+# ایجاد یا به‌روزرسانی لینک‌های سمبلیک
+if [ -L "$DESTINATION_PATH/$ALIAS_NAME" ]; then
+  echo "Updating symbolic link $DESTINATION_PATH/$ALIAS_NAME"
+else
+  echo "Creating symbolic link $DESTINATION_PATH/$ALIAS_NAME"
+fi
 ln -sf "$DESTINATION_PATH/$PRIMARY_NAME" "$DESTINATION_PATH/$ALIAS_NAME"
 
-# کپی فایل تکمیل به مسیر bash_completion.d
+# بررسی وجود پوشه bash_completion.d و ایجاد آن در صورت عدم وجود
+if [ ! -d "$COMPLETION_DESTINATION_PATH" ]; then
+  echo "Directory $COMPLETION_DESTINATION_PATH does not exist. Creating it."
+  mkdir -p "$COMPLETION_DESTINATION_PATH"
+fi
+
+# جایگزینی فایل تکمیل
+if [ -f "$COMPLETION_DESTINATION_PATH/$COMPLETION_NAME.sh" ]; then
+  echo "Replacing existing completion script $COMPLETION_DESTINATION_PATH/$COMPLETION_NAME.sh"
+fi
 cp "$COMPLETION_SOURCE_PATH" "$COMPLETION_DESTINATION_PATH/$COMPLETION_NAME.sh"
 
 # تایید نصب
 echo "Script has been installed as $PRIMARY_NAME and $ALIAS_NAME."
-echo "Completion script has been installed as $COMPLETION_NAME in /etc/bash_completion.d."
+echo "Completion script has been installed as $COMPLETION_NAME in $COMPLETION_DESTINATION_PATH."
+
+source /etc/bash_completion.d/cargof_completion.sh
+echo "source /etc/../cargof_completion.sh"
