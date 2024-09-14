@@ -21,3 +21,4 @@ _completions() {
 
 # فایل اجرایی شما
 complete -F _completions cargof
+complete -F _completions cf

@@ -64,5 +64,27 @@ cp "$COMPLETION_SOURCE_PATH" "$COMPLETION_DESTINATION_PATH/$COMPLETION_NAME.sh"
 echo "Script has been installed as $PRIMARY_NAME and $ALIAS_NAME."
 echo "Completion script has been installed as $COMPLETION_NAME in $COMPLETION_DESTINATION_PATH."
 
-source /etc/bash_completion.d/cargof_completion.sh
-echo "source /etc/../cargof_completion.sh"
+# دریافت نام کاربری اصلی
+original_user=$SUDO_USER
+
+# نمایش پیغام و تغییر به کاربر اصلی
+echo "Trying to switch to user: $original_user"
+sudo -u $original_user bash -c '
+    sleep 1
+    source /etc/bash_completion.d/cargof_completion.sh
+    sleep 0.5
+    echo "Source completed: /etc/bash_completion.d/cargof_completion.sh"
+'
+
+# نمایش پیغام در صورت خروج از sudo
+echo "Exited from user $original_user"
+echo ""
+echo "\"\""
+echo "  try in your shell/bash/zsh/etc. :"
+echo ""
+echo "      cf [TAB]"
+echo "      cf [TAB]"
+echo ""
+echo "\"\""
+echo ""
+echo "finish installion"
