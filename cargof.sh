@@ -32,15 +32,26 @@ build() {
 }
 
 new() {
-  if [[ "$2" != n=* ]]; then
-    echo "Usage: $0 new n=Name [other-options]"
+  name=""
+  additional_options=""
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      --name)
+        shift
+        name=$1
+        ;;
+      *)
+        additional_options="$additional_options $1"
+        ;;
+    esac
+    shift
+  done
+
+  if [ -z "$name" ]; then
+    echo "Usage: $0 new --name Name [other-options]"
     exit 1
   fi
-
-  name=$(echo "$2" | sed -E 's/^n=//')
-
-  shift 2
-  additional_options="$@"
 
   cargo new "$name" $additional_options
 
@@ -58,8 +69,10 @@ EOL
 
   echo "Project $name created and profile settings added."
 }
+
 if [ "$1" == "build" ]; then
   build
 elif [ "$1" == "new" ]; then
+  shift
   new "$@"
 fi
