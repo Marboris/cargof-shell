@@ -8,6 +8,10 @@ Simple and practical.
 # Install
     sudo bash install.sh
 
+# Put this line to your .bashrc OR .zshrc
+    source /etc/profile.d/cargof_completion.sh
+
+
 # Usage:
     cf --help
     cargof [TAB]

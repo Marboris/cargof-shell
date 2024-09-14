@@ -64,6 +64,8 @@ cp "$COMPLETION_SOURCE_PATH" "$COMPLETION_DESTINATION_PATH/$COMPLETION_NAME.sh"
 echo "Script has been installed as $PRIMARY_NAME and $ALIAS_NAME."
 echo "Completion script has been installed as $COMPLETION_NAME in $COMPLETION_DESTINATION_PATH."
 
+echo "add this line to your source:"
+echo "source /etc/profile.d/cargof_completion.sh"
 echo ""
 echo "\"\""
 echo "  try in your shell/bash/zsh/etc. :"
