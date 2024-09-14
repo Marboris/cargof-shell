@@ -50,3 +50,4 @@ fi
 
 # تایید حذف
 echo "Uninstallation complete."
+echo "for complete remove (_completions helper).. You need to logout OR reboot"

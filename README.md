@@ -18,3 +18,7 @@ Simple and practical.
     cf new --name helloworld
     cd helloworld
     cf build
+
+
+# Author
+\- MRB
