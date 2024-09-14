@@ -1,17 +1,32 @@
 #!/bin/bash
 
+set -e
+
+# رنگ قرمز
+RED='\033[31m'
+# بدون رنگ
+NC='\033[0m'
+
+# تابعی برای چاپ خطا
+print_error() {
+  echo -e "${RED}Error: $1${NC}"
+}
+
 if [ "$1" != "build" ] && [ "$1" != "new" ]; then
-  echo "Usage: $0 {build|new} [options]"
+  print_error "Usage: $0 {build|new} [options]"
   exit 1
 fi
 
 build() {
-  cargo build --release
+  if ! cargo build --release; then
+    print_error "Cargo build failed."
+    exit 1
+  fi
 
   package_name=$(grep '^name =' Cargo.toml | sed -E 's/.*name\s*=\s*"(.*)".*/\1/')
 
   if [ -z "$package_name" ]; then
-    echo "Could not extract package name from Cargo.toml"
+    print_error "Could not extract package name from Cargo.toml."
     exit 1
   fi
 
@@ -49,15 +64,20 @@ new() {
   done
 
   if [ -z "$name" ]; then
-    echo "Usage: $0 new --name Name [other-options]"
+    print_error "Usage: $0 new --name Name [other-options]"
     exit 1
   fi
 
-  cargo new "$name" $additional_options
+  # Capture output and error
+  if ! output=$(cargo new "$name" $additional_options 2>&1); then
+    print_error "Error occurred while creating new project: \n"
+    echo -e "${RED}$output${NC}"
+    exit 1
+  fi
 
   sleep 0.5
 
-  cd "$name" || exit
+  cd "$name" || { print_error "Failed to enter directory $name"; exit 1; }
 
   cat <<EOL >>Cargo.toml
 
